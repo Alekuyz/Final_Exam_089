@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Web Service Consume</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <div>Data Test Sender</div>
+        <hr>
+        
+        <script>
+            const url = "http://localhost:8080/POST";
+            function post() {
+                let genID = document.getElementById("myid").value;
+                let nik = document.getElementById("nik").value;
+                let name = document.getElementById("name").value;
+                let tanggal = document.getElementById("tanggal").value;
+                let time = document.getElementById("time").datetime;
+                let dataText = {"id": genID, "nik": nik , "nama": name, "tanggal": tanggal, "time": time};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            function put() {
+                const urlp = "http://localhost:8080/PUT";
+                let editID = document.getElementById("myid").value;
+                let nik = document.getElementById("nik").value;
+                let name = document.getElementById("name").value;
+                let tanggal = document.getElementById("tanggal").value;
+                let time = document.getElementById("time").datetime;
+                let dataText = {"id": editID, "nik": nik , "nama": name, "tanggal": tanggal, "time": time};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: urlp,
+                    method: 'PUT',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            function get() {
+                const urlg = "http://localhost:8080/GET";
+                $.ajax({
+                    url: urlg,
+                    method: 'GET',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+
+            function delID() {
+                const urlp = "http://localhost:8080/DELETE";
+                let editID = document.getElementById("myid").value;
+                let dataText = {"id": editID};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: urlp,
+                    method: 'DELETE',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+         </script>
+        <label>ID       : </Label><input type="text" id="myid" name="id" > <br>
+        <label>NIK     : </Label><input type="text" id="nik" name="nik"> <br>
+        <label>Name      : </Label><input type="text" id="name" name="name"> <br>
+        <label>Tanggal  : </Label><input type="date" id="tanggal" name="tanggal"> <br>
+        <label>Upload Photo  : </Label><input type="file" id="photo" name="photo">
+        <hr>
+
+        <button onclick ="get()">Tampilkan Data</button> |
+        <button onclick ="post()">Tambah Data</button> |
+        <button onclick ="put()">Edit Data</button> |
+        <button onclick ="delID()">Hapus Data</button>
+        <hr>
+        <div id="viewer"></div>
+    </body>
+</html>
+
